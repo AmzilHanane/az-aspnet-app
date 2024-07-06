@@ -3,7 +3,6 @@ name: Build and deploy ASP.Net Core app to Azure Web App - az-aspnet-app
 on:
   push:
     branches:
-      - main
       - master
   workflow_dispatch:
 
@@ -13,6 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: master  # Ensure the `master` branch is checked out
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v2
