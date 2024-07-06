@@ -19,10 +19,10 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build az-aspnet-app.sln --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{ github.workspace }}/az-aspnet-app
+        run: dotnet publish az-aspnet-app.sln -c Release -o ${{ github.workspace }}/az-aspnet-app
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -54,5 +54,5 @@ jobs:
         with:
           app-name: 'az-aspnet-app'
           slot-name: 'production'  # Use 'production' or your specific slot name
-          package: ./${{ github.workspace }}/az-aspnet-app
+          package: ${{ github.workspace }}/az-aspnet-app
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
