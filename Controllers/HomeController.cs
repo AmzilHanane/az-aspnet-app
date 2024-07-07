@@ -1,16 +1,19 @@
 ﻿using az_aspnet_app.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Dynamic;
 
 namespace az_aspnet_app.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            this._configuration = configuration;
         }
 
         public IActionResult Index()
@@ -27,6 +30,12 @@ namespace az_aspnet_app.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public void OnGet()
+        {
+            ViewData["Greeting"] = _configuration["Greeting"];
+
         }
     }
 }
